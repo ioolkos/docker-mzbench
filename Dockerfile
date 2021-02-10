@@ -1,12 +1,12 @@
-FROM erlang:20.3.8.22
+FROM erlang:22.3.4.15
 
-ENV MZBENCH_REV "f8da05dd2dfc06a87bc3870095e360ee184de4e2"
+ENV MZBENCH_REV "27fd1910293d12223c60a8b7bb5ef8abe8e918b8"
 
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update \
     && apt-get install -y vim rsync
 
-RUN curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py \
+RUN curl https://bootstrap.pypa.io/2.7/get-pip.py -o get-pip.py \
     && python get-pip.py \
     && rm get-pip.py
 
@@ -19,6 +19,6 @@ RUN cd / \
     && pip install -r requirements.txt
 
 COPY ./server.config /etc/mzbench/server.config
-EXPOSE 8888
+EXPOSE 4800
 
 CMD /app/mzbench/bin/mzbench start_server --config /etc/mzbench/server.config; tail -f /dev/null
